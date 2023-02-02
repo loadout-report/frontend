@@ -207,6 +207,7 @@ dependencies = [
 [[package]]
 name = "data"
 version = "0.1.0"
+source = "git+https://github.com/loadout-report/loadout.report#c6e338a4c862ab4a92361f48212744245bf3f631"
 dependencies = [
  "serde",
  "serde_derive",

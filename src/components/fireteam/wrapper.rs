@@ -23,7 +23,7 @@ pub fn wrapper(props: &WrapperProps) -> Html {
         let fireteam_handle = fireteam.clone();
         let profile = profile.clone();
         let client = client.clone();
-        use_effect_with_deps(move |profile: DestinyProfileResponse| {
+        use_effect_with_deps(move |profile| {
             let profile = profile.clone();
             let client = client.clone();
             wasm_bindgen_futures::spawn_local(async move {
@@ -37,7 +37,9 @@ pub fn wrapper(props: &WrapperProps) -> Html {
                         return;
                     }
                 };
-                let membership_id = profile.profile.and_then(|p| Some(p.data?.user_info?.membership_id)).unwrap_or_default();
+                let membership_id = profile.profile
+                    .as_ref().to_owned()
+                    .and_then(|p| Some(p.clone().data?.user_info?.membership_id)).unwrap_or_default();
 
                 let future = members.iter()
                     .map(|m| m.membership_id)
@@ -52,7 +54,7 @@ pub fn wrapper(props: &WrapperProps) -> Html {
                 let profiles = profiles.into_iter()
                     .filter_map(|x| x.ok())
                     .collect::<Vec<_>>();
-                let profiles = vec![profile.clone(), profiles].concat();
+                let profiles = vec![vec![profile.as_ref().to_owned()], profiles].concat();
                 fireteam_handle.set(Some(profiles));
             });
         }, profile.clone());

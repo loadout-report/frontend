@@ -20,7 +20,7 @@ yew-hooks = "0.2.0"
 wee_alloc = "0.4.5"
 serde_json = "1"
 serde_derive = "1"
-data = {version = "0.1.0", path = "../data"}
+data = { git = "https://github.com/loadout-report/loadout.report"}
 stylist = {version = "0.12.0", features = ["yew_integration"]}
 wasm-bindgen-futures = "0.4.33"
 gloo-storage = "0.2.2"
