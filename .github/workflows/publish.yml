@@ -24,7 +24,7 @@ jobs:
         with:
           version: 'latest'
       - name: Build
-        run: cd frontend && trunk build
+        run: trunk build
         env:
           D2_API_KEY: ${{ secrets.D2_API_KEY }}
           API_BASE: ${{ secrets.API_BASE }}
@@ -37,6 +37,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 41910b5d7162c8f1d3f63fd1878b3ad2
           projectName: loadout-report
-          directory: frontend/dist
+          directory: dist
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
