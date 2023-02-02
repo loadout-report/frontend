@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Trunk Template</title>
+    <link data-trunk rel="sass" href="index.scss" />
+    <script
+            src="https://browser.sentry-cdn.com/7.34.0/bundle.tracing.min.js"
+            integrity="sha384-3w0Bmtwehbv8MH8akckH78UJlX4muadjYSzwTQYYgOp4T96F/25itcN5r0oijRU+"
+            crossorigin="anonymous"
+    ></script>
+    <script>
+      Sentry.init({
+        dsn: "https://e74a40efee0d4305b8caf7d15a762cc6@o4504575555010560.ingest.sentry.io/4504575564054528",
+        integrations: [new Sentry.BrowserTracing()],
+        tracesSampleRate: 1.0,
+      });
+    </script>
+  </head>
+</html>
