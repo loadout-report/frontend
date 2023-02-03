@@ -20,7 +20,7 @@ pub struct WheelProps {
 #[function_component(Wheel)]
 pub fn wheel() -> Html {
     let fallback = html! {
-        <div>{"Loading..."}</div>
+        <div>{"Loading exotics..."}</div>
     };
 
 
