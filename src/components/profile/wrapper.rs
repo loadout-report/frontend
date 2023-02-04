@@ -20,17 +20,13 @@ pub struct WrapperProps {
 #[function_component(ProfileWrapper)]
 pub fn wrapper(props: &WrapperProps) -> Html {
     let fallback = html!("loading profile");
-
     let username = use_state(|| None);
-    let client: Rc<Client> = use_context::<Rc<Client>>().expect("Client not initialised");
 
     let onprofile = {
-        let client = client.clone();
         let username_handle = username.clone();
-
         Callback::from(move |search_request| {
-            let client = client.clone();
             let username_handle = username_handle.clone();
+            info!("user entered: {:?}", search_request);
             username_handle.set(Some(search_request));
         })
     };
