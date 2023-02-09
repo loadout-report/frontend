@@ -55,6 +55,7 @@ pub struct AsyncProfileProviderProperties {
 pub fn async_profile_provider(properties: &AsyncProfileProviderProperties) -> HtmlResult {
     let client: Rc<Client> = use_context::<Rc<Client>>().expect("Client not initialised");
     let profile: UseFutureHandle<Result<DestinyProfileResponse, anyhow::Error>> = {
+        info!("creating async profile provider handle");
         let search_request = properties.search_request.clone();
         let client = client.clone();
         use_future(|| async move {
