@@ -288,7 +288,6 @@ dependencies = [
  "gloo-net",
  "gloo-storage",
  "js-sys",
- "log",
  "obfstr",
  "reqwest",
  "rexie",
@@ -299,11 +298,11 @@ dependencies = [
  "strum",
  "strum_macros",
  "stylist",
+ "time 0.3.17",
  "tracing",
  "tracing-subscriber",
  "tracing-web",
  "wasm-bindgen-futures",
- "wasm-logger",
  "web-sys",
  "wee_alloc",
  "yew",
@@ -1448,6 +1447,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a561bf4617eebd33bca6434b988f39ed798e527f51a1e797d0ee4f61c0a38376"
 dependencies = [
  "itoa",
+ "js-sys",
  "serde",
  "time-core",
  "time-macros",
@@ -1752,17 +1752,6 @@ name = "wasm-bindgen-shared"
 version = "0.2.84"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0046fef7e28c3804e5e38bfa31ea2a0f73905319b677e57ebe37e49358989b5d"
-
-[[package]]
-name = "wasm-logger"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "074649a66bb306c8f2068c9016395fa65d8e08d2affcbf95acf3c24c3ab19718"
-dependencies = [
- "log",
- "wasm-bindgen",
- "web-sys",
-]
 
 [[package]]
 name = "web-sys"

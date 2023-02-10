@@ -2,9 +2,9 @@ use std::borrow::Borrow;
 use std::ops::Deref;
 use std::rc::Rc;
 use anyhow::bail;
-use log::{info, warn};
 use rustgie::types::destiny::responses::DestinyProfileResponse;
 use rustgie::types::user::{ExactSearchRequest, UserInfoCard};
+use tracing::{info, warn};
 
 use yew::prelude::*;
 use yew::suspense::{use_future, UseFutureHandle};

@@ -5,7 +5,6 @@ use crate::components::wheel::LoadedWheel;
 use crate::components::fireteam::FireteamWrapper;
 use crate::components::profile::ProfileWrapper;
 use js_sys::Math::{floor, random};
-use log::info;
 
 use yew::html;
 use yew::suspense::{Suspension, SuspensionResult, use_future, UseFutureHandle};

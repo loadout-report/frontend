@@ -1,4 +1,3 @@
-use log::*;
 use obfstr::obfstr;
 use serde_derive::{Deserialize, Serialize};
 use strum::IntoEnumIterator;

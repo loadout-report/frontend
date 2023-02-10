@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use anyhow::Context;
-use log::info;
 use rustgie::{RustgieClient, RustgieClientBuilder};
 use rustgie::types::api_response_::BungieApiResponse;
 use rustgie::types::BungieMembershipType;
@@ -13,6 +12,7 @@ use rustgie::types::user::{ExactSearchRequest, UserInfoCard};
 
 use serde_derive::{Serialize, Deserialize};
 use data::api::manifest::model::Item;
+use tracing::info;
 
 const API_BASE: &str = env!("API_BASE");
 

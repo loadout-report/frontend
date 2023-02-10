@@ -1,5 +1,4 @@
 use std::rc::Rc;
-use log::info;
 use rustgie::types::destiny::definitions::DestinyInventoryItemDefinition;
 use rustgie::types::destiny::responses::DestinyProfileResponse;
 use rustgie::types::destiny::TierType;
@@ -10,6 +9,7 @@ use yew::{utils};
 use yew::{Children};
 use yew::suspense::{use_future, UseFutureHandle};
 use data::api::manifest::model::{Hash, Item};
+use tracing::info;
 use roll::Roll;
 use crate::client::Client;
 use crate::components::wheel::roll::_RollProps::roll_options;

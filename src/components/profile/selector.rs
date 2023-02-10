@@ -1,4 +1,3 @@
-use log::info;
 use rustgie::types::user::ExactSearchRequest;
 use serde_derive::{Serialize, Deserialize};
 use web_sys::HtmlInputElement;

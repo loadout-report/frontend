@@ -1,8 +1,8 @@
 use std::borrow::Borrow;
 use std::ops::Deref;
 use std::rc::Rc;
-use log::{info, warn};
 use rustgie::types::destiny::responses::DestinyProfileResponse;
+use tracing::{info, warn};
 use yew::prelude::*;
 use yew::suspense::{use_future, UseFutureHandle};
 use crate::client::Client;

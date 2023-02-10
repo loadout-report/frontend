@@ -1,5 +1,4 @@
 use js_sys::Math::{floor, random};
-use log::info;
 use yew::prelude::*;
 use super::RollOption;
 
