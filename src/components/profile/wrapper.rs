@@ -5,9 +5,11 @@ use anyhow::bail;
 use rustgie::types::destiny::responses::DestinyProfileResponse;
 use rustgie::types::user::{ExactSearchRequest, UserInfoCard};
 use tracing::{info, warn};
+use web_sys::async;
 
 use yew::prelude::*;
-use yew::suspense::{use_future, UseFutureHandle};
+use yew::props;
+use yew::suspense::{Suspension, SuspensionResult, use_future, use_future_with_deps, UseFutureHandle};
 use crate::client::Client;
 use crate::components::wheel::RollOption;
 use super::*;
@@ -20,7 +22,7 @@ pub struct WrapperProps {
 #[function_component(ProfileWrapper)]
 pub fn wrapper(props: &WrapperProps) -> Html {
     let fallback = html!("loading profile");
-    let username = use_state(|| None);
+    let username: UseStateHandle<Option<ExactSearchRequest>> = use_state(|| None);
 
     let onprofile = {
         let username_handle = username.clone();
@@ -36,7 +38,7 @@ pub fn wrapper(props: &WrapperProps) -> Html {
           <ProfileSelector {onprofile} />
           if username.is_some() {
               <Suspense {fallback}>
-                <AsyncProfileProvider search_request={username.as_ref().unwrap().clone()}>
+                <AsyncProfileProvider display_name={username.as_ref().unwrap().clone().display_name.unwrap()} code={username.as_ref().unwrap().display_name_code}>
                   { for props.children.iter() }
                 </AsyncProfileProvider>
               </Suspense>
@@ -45,24 +47,36 @@ pub fn wrapper(props: &WrapperProps) -> Html {
     }
 }
 
+#[hook]
+fn use_profile(display_name: &str, code: i16) -> SuspensionResult<DestinyProfileResponse> {
+
+}
+
 #[derive(Clone, PartialEq, Debug, Properties)]
 pub struct AsyncProfileProviderProperties {
     pub children: Children,
-    pub search_request: ExactSearchRequest,
+    pub display_name: AttrValue,
+    pub code: i16,
 }
 
 #[function_component(AsyncProfileProvider)]
 pub fn async_profile_provider(properties: &AsyncProfileProviderProperties) -> HtmlResult {
     let client: Rc<Client> = use_context::<Rc<Client>>().expect("Client not initialised");
+    let display_name = properties.display_name.clone();
+    let display_name = display_name.to_string();
     let profile: UseFutureHandle<Result<DestinyProfileResponse, anyhow::Error>> = {
         info!("creating async profile provider handle");
-        let search_request = properties.search_request.clone();
         let client = client.clone();
-        use_future(|| async move {
+        use_future_with_deps(|arguments| async move {
             let client = client.clone();
-            let search_request = search_request.clone();
-            info!("searching for profile: {:?}", search_request);
-            let user_info: Option<Vec<UserInfoCard>> = client.search(search_request).await.inspect_err(|err| warn!("error searching for profile: {:?}", err)).ok();
+            let arguments = arguments.as_ref().clone();
+            info!("searching for profile: {:?}", arguments.0.clone());
+            let user_info: Option<Vec<UserInfoCard>> = client
+                .search(ExactSearchRequest {
+                    display_name: Some(arguments.0.to_string()),
+                    display_name_code: arguments.1
+                })
+                .await.inspect_err(|err| warn!("error searching for profile: {:?}", err)).ok();
             if let Some(info) = user_info.and_then(|info| {
                 let first = info.first();
                 first.cloned()
@@ -72,7 +86,7 @@ pub fn async_profile_provider(properties: &AsyncProfileProviderProperties) -> Ht
                 }
             }
             bail!("no profile found")
-        })?
+        }, (display_name, properties.code))?
     };
 
     let template = match *profile {
